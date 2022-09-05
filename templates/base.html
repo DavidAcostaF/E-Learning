@@ -157,15 +157,15 @@
       <li class="nav-item">
         <a class="nav-link" href="">
           <i class="bi bi-grid"></i>
-          <span>Products</span>
+          <span>Classrooms</span>
         </a>
       </li><!-- End Dashboard Nav -->
       {% if request.user.is_superuser%}
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="{%url 'create_classroom'%}">
           <i class="bi bi-menu-button-wide"></i>
-          <span>Total Sales</span>
+          <span>New classroom</span>
         </a>
       </li>
 
