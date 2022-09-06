@@ -20,4 +20,10 @@ class ClassRoom(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+class ClassPosts(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    class_room = models.ForeignKey(ClassRoom,on_delete=models.CASCADE)
+    user = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    files = models.FileField(upload_to='files_posts',null=True,blank=True)
 

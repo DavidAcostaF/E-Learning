@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{%block body%}
+<div class="row">
+    {%for class in object_list%}
+    <div class="card" style="width: 18rem; margin-left: 20px;">
+        <div class="card-body">
+          <h5 class="card-title">{{class.name}}</h5>
+          <p class="card-text">{{class.description}}</p>
+          <a href="{%url 'detail_classroom' class.classroom_code %}" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    {%endfor%}
+  </div>
+
+{%endblock body%}

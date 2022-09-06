@@ -1,12 +1,14 @@
-from .models import ClassRoom
-from django.db.models.signals import post_save
 import uuid
+from django.db.models.signals import post_save
+
+from .models import ClassRoom
+
 
 def ClassCode(sender,instance,**kwargs):
-    class_code = instance
-    if not class_code.classroom_code:
-        uid = str(uuid.uuid4())[:10]
-        class_code.uuid = uid
-        class_code.save()
+    if not instance.classroom_code:
+        print(instance.classroom_code)
+        uid = str(uuid.uuid4())[:13]
+        instance.classroom_code = uid
+        instance.save()
         
 post_save.connect(ClassCode,sender = ClassRoom)
