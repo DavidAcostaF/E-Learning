@@ -1,20 +1,38 @@
 {% extends 'base.html' %}
 
 {%block body%}
-{{object.classroom_code}}
+{% comment %} {%if object.user == request.user%} {% endcomment %}
 <div class="row">
     <div class="col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Create Classroom</h5>
+          <h5 class="card-title">Create activity</h5>
           <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
           <form action="{%url 'create_post' object.classroom_code%}" method="post" enctype="multipart/form-data">{% csrf_token %}
             {{form.as_p}}
-            <input type="file" name="file">
+            <input type="file" name="file" id="file" onchange="inputFile()" class="form-control">
+            <input type="text" name="file_name" id="file_name" hidden="hidden" class="form-control" placeholder="File name...">
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
         </div>
       </div>
     </div>
 </div>
+{% comment %} {%endif%} {% endcomment %}
+
+{%for post in posts%}
+<div class="card">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{post.title}}</h5>
+    <p class="card-text">{{post.content}}</p>
+    {%if post.files%}
+    <a href="{{post.files.url}}" target="_blank" class="card-text">{{post.files_name}}</a><br>
+    {%endif%}
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+{%endfor%}
 {%endblock body%}

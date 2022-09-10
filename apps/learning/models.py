@@ -26,4 +26,4 @@ class ClassPosts(models.Model):
     class_room = models.ForeignKey(ClassRoom,on_delete=models.CASCADE)
     user = models.ForeignKey(MyUser,on_delete=models.CASCADE)
     files = models.FileField(upload_to='files_posts',null=True,blank=True)
-
+    files_name = models.CharField(max_length=40,null=True,blank=True)

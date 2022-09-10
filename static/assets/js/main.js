@@ -101,52 +101,10 @@
     onscroll(document, toggleBacktotop)
   }
 
-  /**
-   * Initiate tooltips
-   */
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
 
-
-  /**
-   * Initiate Bootstrap validation check
-   */
-  var needsValidation = document.querySelectorAll('.needs-validation')
-
-  Array.prototype.slice.call(needsValidation)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
 
 
 
 })();
 
-function openNav() {
-  document.getElementById("mySidenav").style.width = "500px";
-  elementTotal = document.getElementById('total')
-  let total = 0
-  let sum = 0
-  let column = document.querySelectorAll('.sub_total')
-  if(column.length != 0){
-    column.forEach(e=>{
-      total = Number(e.textContent)
-      sum += total
-      console.log(sum) 
-    })
-    elementTotal.innerHTML = sum 
-  }
-}
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}

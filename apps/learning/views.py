@@ -22,7 +22,7 @@ class MyClass(ListView):
 class CreateClasroom(CreateView):
     model = ClassRoom
     form_class = FormClassRoom
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('home')
     template_name = 'classroom/create_classroom.html'
 
 class JoinInClass(CreateView):
@@ -50,6 +50,7 @@ class DetailClassroom(DetailView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class
+        context['posts'] = ClassPosts.objects.filter(class_room__classroom_code = self.kwargs['classroom_code'])
         return context
 
 
@@ -64,9 +65,18 @@ class CreatePosts(CreateView):
             user = request.user
             title = form.cleaned_data.get('title')
             content = form.cleaned_data.get('content')
+            file_name = request.POST.get('file_name')
             files = request.FILES.get('file')
-            sefl_post = self.model.objects.create(title = title,content = content,class_room=room,user = user,files = files)
-            print(request.FILES.get('file'))
+            self_post = self.model.objects.create(title = title,content = content,class_room=room,user = user,files = files)
+            if file_name:
+                self_post.files_name = file_name
+                self_post.save()
         else:
             print(form.errors)
         return redirect(request.META.get('HTTP_REFERER'))
+
+class DetailActivity(DetailView):
+    model = ClassPosts
+    template_name = 'classroom/detail_activity.html'
+    context_object_name = 'activity'
+

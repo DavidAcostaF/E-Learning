@@ -23,11 +23,11 @@ class FormPost(forms.ModelForm):
             'title':forms.TextInput(
                 attrs={
                     'class':'form-control',
-                    'placeholder':'Classroom title'
+                    'placeholder':'Title...'
                 }),
             'content':forms.Textarea(
                 attrs={
                     'class':'form-control',
-                    'placeholder':'Classroom content'
+                    'placeholder':'Content...'
                 })
         }
