@@ -63,10 +63,12 @@
 </table>
 
 {%if files.files%}
-        <form action="{%url 'submit_activity' files.pk%}" method="post" enctype="multipart/form-data">{% csrf_token %}
+    {% comment %} Cancel submit {% endcomment %}
+        <form action="{%url 'cancel_submit' files.pk%}" method="post" enctype="multipart/form-data">{% csrf_token %}
           <button type="submit" class="btn btn-primary">Cancel submit</button>
       </form>
 {%else %}
+
 <div class="row">
   <div class="col-sm-6">
     <div class="card">

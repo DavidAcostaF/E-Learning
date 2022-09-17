@@ -131,5 +131,7 @@ class SubmitActivity(CreateView):
 
 class CancelSubmit(CreateView):
     model = Files
-    def post(self,request):
-        
+    def post(self,request,pk):
+        post = self.model.objects.get(id = pk)
+        post.files.delete()
+        return redirect(request.META.get('HTTP_REFERER')) 
