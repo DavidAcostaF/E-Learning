@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{%block body%}
+
+<div class="card">
+  <div class="card-header">
+    {{activity.title}}
+    
+    <div class="dropdown" style="float: right;cursor: pointer;">
+    <i class="fa-solid fa-list-ul" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton1"></i>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="#">Update</a></li>
+        <li><a class="dropdown-item" href="#" onclick="deleteActivity({{activity.id}})">Delete</a></li>
+    </ul>
+    </div>
+
+</div>
+
+<div class="card-body">
+      <div style="font-size: 15px;">
+        <span>Start date: {{ activity.start_date|date:"D d M Y" }}</span><br>
+        <span>End date: {{ activity.end_date|date:"D d M Y" }}</span>
+      </div>
+    <h5 class="card-title">{{activity.content}}</h5>
+    {%if activity.files%}
+    <a href="{{activity.files.url}}" target="_blank" class="card-text">{{activity.files|cut:'files_posts/'}}</a><br>
+    {%endif%}
+</div>
+</div>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th scope="row">Status</th>
+      <td>Any</td>
+    </tr>
+    <tr>
+      <th scope="row">Qualification status</th>
+      <td>Any</td>
+    </tr>
+
+    <tr>
+      <th scope="row">Last modification</th>
+      <td colspan="2">{{files.upload_date}}</td>
+    </tr>
+    {%if files.files%}
+    <tr>
+      <th scope="row">Files sent</th>
+      <td colspan="2"><a href="{{files.files.url}}" target="_blank">{{files.files|cut:'UploadFiles/'}}</a></td>
+    </tr>
+    {%endif%}
+    {% comment %} <tr>
+    <th scope="row">Add comentary</th> 
+    <td colspan="2">
+    <form method="post" action="{%url 'submit_activity' activity.pk%}">{% csrf_token %}
+    <textarea scope="row" class="form-control" name="comment" placeholder="Add comment"></textarea><br>
+    <button type="submit" class="btn-sm btn btn-primary">Submit</button>
+    </form>
+    </td>
+    </tr> {% endcomment %}
+
+  </tbody>
+</table>
+
+{%if files.files%}
+        <form action="{%url 'submit_activity' files.pk%}" method="post" enctype="multipart/form-data">{% csrf_token %}
+          <button type="submit" class="btn btn-primary">Cancel submit</button>
+      </form>
+{%else %}
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Submit activity</h5>
+        <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+        <form action="{%url 'submit_activity' activity.pk%}" method="post" enctype="multipart/form-data">{% csrf_token %}
+          <input type="file" name="file" class="form-control"><br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+{%endif%}
+{%endblock body%}

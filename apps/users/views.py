@@ -3,6 +3,7 @@ from django.views.generic import CreateView
 from django.contrib.auth import authenticate,login
 # Create your views here.
 from .forms import FormUser
+
 class Register(CreateView):
     template_name = 'users/register.html'
     form_class = FormUser

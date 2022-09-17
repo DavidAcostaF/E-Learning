@@ -1,5 +1,6 @@
+from dataclasses import field
 from django import forms
-from .models import ClassRoom,ClassPosts
+from .models import ClassRoom,Posts,Files
 
 class FormClassRoom(forms.ModelForm):
     class Meta:
@@ -13,12 +14,25 @@ class FormClassRoom(forms.ModelForm):
                     'placeholder':'Classroom name'
                 }
             ),
-            'description':forms.TextInput(attrs={'class':'form-control','placeholder':'Classroom description'})}
+            'description':forms.TextInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Classroom description'
+                    })
+            }
 
 class FormPost(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        if(kwargs.get('form_kwargs')):
+            data = kwargs.pop('form_kwargs')
+            self.user = data.pop('user')
+            self.code = data.pop('code')
+        super().__init__(*args, **kwargs)
+
     class Meta:
-        model = ClassPosts
-        fields = ['title','content']
+        model = Posts
+        fields = ['title','content','start_date','end_date','activity','files']
         widgets = {
             'title':forms.TextInput(
                 attrs={
@@ -29,5 +43,51 @@ class FormPost(forms.ModelForm):
                 attrs={
                     'class':'form-control',
                     'placeholder':'Content...'
-                })
+                }),
+            'start_date':forms.DateInput(
+                attrs={
+                'class':'form-control',
+                'type':'date'
+            }),
+            'end_date':forms.DateInput(
+                attrs={
+                'class':'form-control',
+                'type':'date'
+            }),
+            'activity':forms.TextInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Activity...'
+            }),
+            'files':forms.FileInput(
+            attrs={
+                'class':'form-control',
+                'multiple':'true'
+            })
+        }
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        self.user
+        
+        if commit:
+            instance.user = self.user
+            instance.class_room = self.code
+            instance.save()
+        return instance
+
+
+class FormSubmitFiles(forms.ModelForm):
+    class Meta:
+        model = Files
+        fields = ['files','comment']
+
+        widgets = {
+            'files':forms.FileInput(),
+            'comme':forms.Textarea(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Add comment'
+                }
+            )
         }

@@ -5,10 +5,9 @@ from .models import ClassRoom
 
 
 def ClassCode(sender,instance,**kwargs):
-    if not instance.classroom_code:
+    if not instance.code:
         print(instance.classroom_code)
         uid = str(uuid.uuid4())[:13]
         instance.classroom_code = uid
         instance.save()
-        
 post_save.connect(ClassCode,sender = ClassRoom)
