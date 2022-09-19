@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{%block body%}
+
+<div id="modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <form action="" method="post" id="form_delete"
+            enctype="multipart/form-data"
+            class="modal-content modal-dialog modal-lg">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h2 class="modal-title">Grade assingment</h2>
+                <button class="btn-close" type="button" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+                <button id="boton_creacion" class="btn btn-primary"
+                    type="submit">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User</th>
+        <th scope="col">File</th>
+        <th scope="col">Grade assingment</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for submits in object_list%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{submits.user}}</td>
+        <td><a href="{{submits.files.url}}" target="_blank">{{submits.files|cut:'UploadFiles/'}}</a></td>
+        <td><button onclick="">Grade assingment</button></td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+{%endblock body%}

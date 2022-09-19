@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.urls import reverse_lazy,reverse
 from django.views.generic import TemplateView,CreateView,ListView,DetailView,DeleteView
-from apps.learning.forms import FormClassRoom,FormPost,FormSubmitFiles
+from apps.learning import forms
 from django.db.models import Q
 from apps.learning.models import Posts, ClassRoom,Files
 
@@ -23,7 +23,7 @@ class MyClass(ListView):
 
 class CreateClasroom(CreateView):
     model = ClassRoom
-    form_class = FormClassRoom
+    form_class = forms.FormClassRoom
     success_url = reverse_lazy('home')
     template_name = 'classroom/create_classroom.html'
 
@@ -52,7 +52,7 @@ class JoinInClass(CreateView):
 
 class DetailClassroom(DetailView):
     model = ClassRoom
-    form_class = FormPost
+    form_class = forms.FormPost
     template_name = 'classroom/detail_classroom.html'
 
     def get_object(self,**kwargs):
@@ -67,7 +67,7 @@ class DetailClassroom(DetailView):
 
 class CreateActivity(CreateView):
     model = Posts
-    form_class = FormPost
+    form_class = forms.FormPost
     def post(self,request,slug):
         form = self.form_class(request.POST,request.FILES, form_kwargs=self.get_form_kwargs())
         if form.is_valid():
@@ -113,7 +113,7 @@ class DeleteActivity(DeleteView):
 
 class SubmitActivity(CreateView):
     model = Files
-    form_class = FormSubmitFiles
+    form_class = forms.FormSubmitFiles
 
     def post(self,request,pk):
         user = request.user
@@ -134,4 +134,20 @@ class CancelSubmit(CreateView):
     def post(self,request,pk):
         post = self.model.objects.get(id = pk)
         post.files.delete()
+        post.delete()
         return redirect(request.META.get('HTTP_REFERER')) 
+
+class SubmitedFiles(ListView):
+    model = Files
+    template_name = 'classroom/submited_files.html'
+
+    def get_queryset(self):
+        context = self.model.objects.filter(activity = self.kwargs['pk'])
+        # context = {
+        #     'activty':activity
+        #     }
+        return context
+
+class GradeAssingment(CreateView):
+    model = Files
+    form_class = forms.FromGradeAssingment

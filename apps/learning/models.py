@@ -41,6 +41,7 @@ class Files(models.Model):
     activity = models.ForeignKey(Posts,on_delete=models.CASCADE,related_name='room')
     files = models.FileField(upload_to='UploadFiles',null=True,blank=True)
     comment = models.TextField(blank=True,null=True)
+    grade = models.FloatField(blank=True,null=True)
     upload_date = models.DateField(auto_now_add=True)
 
     def delete(self, *args, **kwargs):

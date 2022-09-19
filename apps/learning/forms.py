@@ -91,3 +91,20 @@ class FormSubmitFiles(forms.ModelForm):
                 }
             )
         }
+
+class FromGradeAssingment(forms.ModelForm):
+    class Meta:
+        model = Files
+        fields = ['grade','comment']
+        widgets = {
+            'grade':forms.NumberInput(
+                attrs={
+                    'class':'form-control'
+                }
+            ),
+            'comment':forms.Textarea(
+                attrs={
+                    'class':'form-control'
+                }
+            ),
+        }

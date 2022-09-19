@@ -32,11 +32,11 @@
   <tbody>
     <tr>
       <th scope="row">Status</th>
-      <td>Any</td>
+      <td>{%if files.files%}Sent to qualify{%else%}No attempt{%endif%}</td>
     </tr>
     <tr>
       <th scope="row">Qualification status</th>
-      <td>Any</td>
+      <td>{%if files.qualification%}{{files.qualification}}{%else%}No calified{%endif%}</td>
     </tr>
 
     <tr>
@@ -84,4 +84,7 @@
   </div>
 </div>
 {%endif%}
+
+    <a href="{%url 'submited_files' activity.id%}" class="card-text">Submited files</a>
+
 {%endblock body%}
