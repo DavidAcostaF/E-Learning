@@ -99,7 +99,8 @@ class FromGradeAssingment(forms.ModelForm):
         widgets = {
             'grade':forms.NumberInput(
                 attrs={
-                    'class':'form-control'
+                    'class':'form-control',
+                    'max':10.00
                 }
             ),
             'comment':forms.Textarea(

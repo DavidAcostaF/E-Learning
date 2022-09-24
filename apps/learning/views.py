@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.urls import reverse_lazy,reverse
-from django.views.generic import TemplateView,CreateView,ListView,DetailView,DeleteView
+from django.views.generic import TemplateView,CreateView,ListView,DetailView,DeleteView,UpdateView
 from apps.learning import forms
 from django.db.models import Q
 from apps.learning.models import Posts, ClassRoom,Files
@@ -148,6 +148,14 @@ class SubmitedFiles(ListView):
         #     }
         return context
 
-class GradeAssingment(CreateView):
+class GradeAssingment(UpdateView):
     model = Files
     form_class = forms.FromGradeAssingment
+    template_name = 'classroom/grade_assingment.html'
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
