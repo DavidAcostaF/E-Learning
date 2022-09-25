@@ -15,6 +15,7 @@ urlpatterns = [
     path('classroom/submit_activity/<int:pk>/',views.SubmitActivity.as_view(),name='submit_activity'),
     path('classroom/cancel_submit/<int:pk>/',views.CancelSubmit.as_view(),name='cancel_submit'),
     path('classroom/submited_files/<int:pk>/',views.SubmitedFiles.as_view(),name='submited_files'),
-    path('classroom/submited_files/grade_assingment/<int:pk>/',views.GradeAssingment.as_view(),name='grade_assingment')
+    path('classroom/submited_files/grade_assingment/<int:pk>/',views.GradeAssingment.as_view(),name='grade_assingment'),
+    path('classroom/submited_files/cancel_grade/<int:pk>/',views.CancelGrade.as_view(),name='cancel_grade')
 
 ]

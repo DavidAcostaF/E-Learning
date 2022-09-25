@@ -92,7 +92,7 @@ class FormSubmitFiles(forms.ModelForm):
             )
         }
 
-class FromGradeAssingment(forms.ModelForm):
+class FormGradeAssingment(forms.ModelForm):
     class Meta:
         model = Files
         fields = ['grade','comment']

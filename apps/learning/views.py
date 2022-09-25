@@ -7,9 +7,6 @@ from apps.learning.models import Posts, ClassRoom,Files
 
 # Create your views here.
 
-# class tem(TemplateView):
-#     template_name = 'base.html'
-
 class MyClass(ListView):
     model = ClassRoom
     template_name = 'classroom/home.html'
@@ -85,7 +82,6 @@ class CreateActivity(CreateView):
         form_kwargs = super().get_form_kwargs()
         form_kwargs['user'] = self.request.user
         form_kwargs['code'] = self.get_queryset()
-        print(self.get_queryset(),"123123")
         return form_kwargs
 
 class DetailActivity(DetailView):
@@ -150,7 +146,7 @@ class SubmitedFiles(ListView):
 
 class GradeAssingment(UpdateView):
     model = Files
-    form_class = forms.FromGradeAssingment
+    form_class = forms.FormGradeAssingment
     template_name = 'classroom/grade_assingment.html'
 
     def get_context_data(self,**kwargs):
@@ -159,3 +155,13 @@ class GradeAssingment(UpdateView):
 
     def get_success_url(self):
         return self.request.META.get('HTTP_REFERER')
+
+class CancelGrade(UpdateView):
+    model = Files
+    def post(self,request,pk):
+        print(self.get_object())
+        grade = self.get_object()
+        grade.comment = None
+        grade.grade = None
+        grade.save()
+        return redirect(request.META.get('HTTP_REFERER'))

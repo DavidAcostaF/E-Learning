@@ -3,6 +3,31 @@
 
 {%block body%}
 
+<div class="modal" tabindex="-1" id="modal_cancel">
+    <div class="modal-dialog">
+        <form action="" method="post" id="cancel_grade"
+            enctype="multipart/form-data"
+            class="modal-content modal-dialog modal-lg">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h2 class="modal-title">Cancel grade</h2>
+                <button class="btn-close" type="button" data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
+                <button id="boton_creacion" class="btn btn-primary"
+                    type="submit">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 
 <table class="table">
     <thead>
@@ -10,7 +35,8 @@
         <th scope="col">#</th>
         <th scope="col">User</th>
         <th scope="col">File</th>
-        <th scope="col">Grade assingment</th>
+        <th scope="col">Grade</th>
+        <th scope="col">Options</th>
       </tr>
     </thead>
     <tbody>
@@ -19,10 +45,26 @@
         <th scope="row">{{forloop.counter}}</th>
         <td>{{submits.user}}</td>
         <td><a href="{{submits.files.url}}" target="_blank">{{submits.files|cut:'UploadFiles/'}}</a></td>
+        <td>{%if submits.grade%}
+        {{submits.grade}}
+        {%endif%}
+        </td>
         <td>
+        
+        {% if submits.grade or  submits.comment%}
             <button hx-get="{%url 'grade_assingment' submits.id%}"
-            hx-target="#dialog" class="btn btn-primary">Grade assingment
+              hx-target="#dialog" class="btn btn-secondary">Edit
             </button>
+            <button onclick="cancelGrade({{submits.id}})" class="btn btn-danger">Cancel grade</buttoon>
+
+        {%else%}
+                    <button hx-get="{%url 'grade_assingment' submits.id%}"
+              hx-target="#dialog" class="btn btn-primary">Grade assingment
+            </button>
+            
+        {% endif %}
+          
+
         </td>
       </tr>
       {%endfor%}

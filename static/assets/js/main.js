@@ -101,10 +101,6 @@
     onscroll(document, toggleBacktotop)
   }
 
-
-
-
-
 })();
 
 
